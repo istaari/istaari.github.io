@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roshan Gupta — Software Developer</title>
+    <meta name="description" content="Roshan Gupta — Software developer building tools that improve developer experience.">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --border: #1e1e2e;
+            --text: #e4e4e7;
+            --text-muted: #8b8b9e;
+            --accent: #a78bfa;
+            --accent-dim: #7c5cbf;
+            --gradient-start: #a78bfa;
+            --gradient-end: #6366f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Subtle grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(circle at 1px 1px, rgba(167, 139, 250, 0.03) 1px, transparent 0);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 80px 0 60px;
+        }
+
+        .intro {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .intro-text h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .intro-text p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .bio {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            line-height: 1.8;
+        }
+
+        .bio strong {
+            color: var(--text);
+        }
+
+        /* Links row */
+        .links {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .links a:hover {
+            color: var(--accent);
+            border-color: var(--accent-dim);
+            background: rgba(167, 139, 250, 0.05);
+        }
+
+        .links a svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Section */
+        section {
+            margin-bottom: 64px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        /* Project card */
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-dim);
+            transform: translateY(-2px);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .project-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-badge {
+            font-size: 0.7rem;
+            background: rgba(167, 139, 250, 0.12);
+            color: var(--accent);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .project-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
+            margin-bottom: 24px;
+        }
+
+        .project-features li {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-features li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .project-tech {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            font-size: 0.75rem;
+            background: rgba(99, 102, 241, 0.08);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: gap 0.2s ease;
+        }
+
+        .project-link:hover {
+            gap: 12px;
+        }
+
+        .project-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-group h3 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 10px;
+        }
+
+        .skill-group ul {
+            list-style: none;
+        }
+
+        .skill-group li {
+            font-size: 0.9rem;
+            padding: 4px 0;
+            color: var(--text);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header {
+                padding: 48px 0 40px;
+            }
+
+            .intro {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .project-features {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                padding: 24px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header, section, footer {
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        section:nth-of-type(1) { animation-delay: 0.1s; }
+        section:nth-of-type(2) { animation-delay: 0.2s; }
+        section:nth-of-type(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="intro">
+                <div class="avatar">R</div>
+                <div class="intro-text">
+                    <h1>Roshan Gupta</h1>
+                    <p>Software Developer</p>
+                </div>
+            </div>
+            <p class="bio">
+                Senior Software Developer with 6+ years of experience specializing in 
+                high-availability <strong>Java/Spring Boot microservices</strong> on Cloud Foundry & AWS. 
+                I also build developer tools and browser extensions in my spare time.
+            </p>
+            <div class="links">
+                <a href="https://github.com/istaari" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                    GitHub
+                </a>
+                <a href="mailto:istaari@users.noreply.github.com">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    Email
+                </a>
+            </div>
+        </header>
+
+        <section>
+            <p class="section-label">Featured Project</p>
+            <div class="project-card">
+                <div class="project-header">
+                    <span class="project-title">
+                        ✨ GitGlam
+                        <span class="project-badge">Chrome Extension</span>
+                    </span>
+                </div>
+                <p class="project-desc">
+                    Transforms GitHub's default markdown into a clean, distraction-free reading experience. 
+                    Beautiful themes, enhanced typography, syntax highlighting, focus mode, and more — 
+                    because reading documentation should feel as good as reading a well-designed blog.
+                </p>
+                <ul class="project-features">
+                    <li>4 Beautiful Themes</li>
+                    <li>Focus Mode</li>
+                    <li>Reading Mode</li>
+                    <li>Image Lightbox</li>
+                    <li>Code Block Enhancements</li>
+                    <li>Reading Progress Stats</li>
+                    <li>Scroll Animations</li>
+                    <li>Keyboard Shortcuts</li>
+                </ul>
+                <div class="project-tech">
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">Chrome Extension (MV3)</span>
+                    <span class="tech-tag">Content Scripts</span>
+                </div>
+                <a href="https://github.com/istaari/GitGlam" class="project-link" target="_blank" rel="noopener">
+                    View on GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <p class="section-label">What I Work With</p>
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li>Java</li>
+                        <li>JavaScript</li>
+                        <li>Go</li>
+                        <li>Python</li>
+                        <li>SQL</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h3>Backend & Cloud</h3>
+                    <ul>
+                        <li>Spring Boot / Spring Cloud</li>
+                        <li>AWS (S3, IAM)</li>
+                        <li>Docker / Cloud Foundry</li>
+                        <li>Kafka / Redis</li>
+                        <li>Microservices</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h3>Focus Areas</h3>
+                    <ul>
+                        <li>Distributed Systems</li>
+                        <li>Event-Driven Architecture</li>
+                        <li>Developer Tooling</li>
+                        <li>Generative AI</li>
+                        <li>Open Source</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Built by <a href="https://github.com/istaari">@istaari</a></p>
+        </footer>
+    </div>
+</body>
+</html>
