@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitGlam — Beautify GitHub Markdown</title>
+    <meta name="description" content="Chrome extension that transforms GitHub markdown into a clean, distraction-free reading experience with beautiful themes, focus mode, and more.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+            background: #ffffff;
+            color: #111827;
+            line-height: 1.7;
+        }
+
+        a {
+            color: #7c3aed;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 100px 24px 80px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #7c3aed;
+            background: rgba(124, 58, 237, 0.08);
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: #6b7280;
+            max-width: 540px;
+            margin: 0 auto 36px;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #111827;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #1f2937;
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #111827;
+            border: 1px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            text-decoration: none;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Themes preview */
+        .themes-strip {
+            display: flex;
+            gap: 0;
+            max-width: 800px;
+            margin: 60px auto 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .theme-swatch {
+            flex: 1;
+            padding: 28px 16px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .theme-swatch.medium { background: #faf8f5; color: #292929; }
+        .theme-swatch.notion { background: #ffffff; color: #37352f; border-left: 1px solid #e5e7eb; }
+        .theme-swatch.sepia { background: #f4ecd8; color: #5b4636; border-left: 1px solid #e5e7eb; }
+        .theme-swatch.nord { background: #2e3440; color: #d8dee9; border-left: 1px solid #e5e7eb; }
+
+        .theme-swatch .theme-icon {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        /* Section */
+        .section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: #6b7280;
+            font-size: 1.05rem;
+        }
+
+        /* Features grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            padding: 28px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            background: #fafafa;
+            transition: all 0.2s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #d1d5db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card h3 {
+            font-size: 1rem;
+            font-weight: 650;
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Divider */
+        .divider {
+            max-width: 800px;
+            margin: 0 auto;
+            border: none;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        /* Install section */
+        .install-steps {
+            counter-reset: step;
+            list-style: none;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .install-steps li {
+            counter-increment: step;
+            padding: 16px 0;
+            padding-left: 48px;
+            position: relative;
+            font-size: 0.95rem;
+            color: #374151;
+        }
+
+        .install-steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            color: #7c3aed;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .install-steps li + li {
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .install-steps code {
+            background: #f3f4f6;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #7c3aed;
+        }
+
+        /* Keyboard shortcuts */
+        .shortcuts {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .shortcut {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        kbd {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #374151;
+            box-shadow: 0 1px 0 #d1d5db;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 80px 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .cta p {
+            color: #6b7280;
+            margin-bottom: 28px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 32px 24px;
+            border-top: 1px solid #f3f4f6;
+            color: #9ca3af;
+            font-size: 0.8rem;
+        }
+
+        footer a {
+            color: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero {
+                padding: 64px 20px 48px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .themes-strip {
+                flex-direction: column;
+            }
+
+            .theme-swatch {
+                border-left: none !important;
+                border-top: 1px solid #e5e7eb;
+            }
+
+            .theme-swatch:first-child {
+                border-top: none;
+            }
+
+            .shortcuts {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero, .section, .cta {
+            animation: fadeUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-badge">Chrome Extension</div>
+        <h1>✨ <span>GitGlam</span></h1>
+        <p class="hero-sub">
+            Transforms GitHub markdown into a clean, distraction-free reading experience — 
+            beautiful themes, focus mode, enhanced code blocks, and more.
+        </p>
+        <!-- Theme swatches -->
+        <div class="themes-strip">
+            <div class="theme-swatch medium">
+                <div class="theme-icon">📝</div>
+                Medium
+            </div>
+            <div class="theme-swatch notion">
+                <div class="theme-icon">📄</div>
+                Notion
+            </div>
+            <div class="theme-swatch sepia">
+                <div class="theme-icon">📜</div>
+                Sepia
+            </div>
+            <div class="theme-swatch nord">
+                <div class="theme-icon">🌌</div>
+                Nord
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Features -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Everything you need for better reading</h2>
+            <p>One extension. Ten powerful features. Zero clutter.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>4 Beautiful Themes</h3>
+                <p>Medium, Notion, Sepia, and Nord — each with matched syntax highlighting colors.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3>Reading Mode</h3>
+                <p>Optimized typography, centered layout, and adjustable column width from 600–1400px.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🖥️</div>
+                <h3>Code Block Enhancements</h3>
+                <p>Language labels, one-click copy, and a clean single-box design that replaces GitHub's toolbar.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Focus Mode</h3>
+                <p>Hides GitHub navigation and sidebars with cinematic slide and fade transitions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🖼️</div>
+                <h3>Image Lightbox</h3>
+                <p>Click any image to view full-size in a smooth zoom overlay.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Progress Bar</h3>
+                <p>Reading progress indicator fixed at the top of the viewport.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎬</div>
+                <h3>Scroll Animations</h3>
+                <p>Content fades in as you scroll. Active paragraph stays highlighted as a reading guide.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔤</div>
+                <h3>Font Size & Night Shift</h3>
+                <p>Slider control for font size (12–24px) plus warm color filter for low-light reading.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Built by <a href="https://istaari.github.io">Roshan Gupta</a> · MIT License · <a href="https://github.com/istaari/GitGlam">Source</a></p>
+    </footer>
+
+</body>
+</html>

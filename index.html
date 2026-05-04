@@ -7,15 +7,15 @@
     <meta name="description" content="Roshan Gupta — Software developer building tools that improve developer experience.">
     <style>
         :root {
-            --bg: #0a0a0f;
-            --surface: #12121a;
-            --border: #1e1e2e;
-            --text: #e4e4e7;
-            --text-muted: #8b8b9e;
-            --accent: #a78bfa;
-            --accent-dim: #7c5cbf;
-            --gradient-start: #a78bfa;
-            --gradient-end: #6366f1;
+            --bg: #ffffff;
+            --surface: #f9fafb;
+            --border: #e5e7eb;
+            --text: #111827;
+            --text-muted: #6b7280;
+            --accent: #2563eb;
+            --accent-dim: #1d4ed8;
+            --gradient-start: #2563eb;
+            --gradient-end: #1d4ed8;
         }
 
         * {
@@ -36,16 +36,7 @@
             min-height: 100vh;
         }
 
-        /* Subtle grid background */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: radial-gradient(circle at 1px 1px, rgba(167, 139, 250, 0.03) 1px, transparent 0);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 0;
-        }
+
 
         .container {
             max-width: 720px;
@@ -127,7 +118,7 @@
         .links a:hover {
             color: var(--accent);
             border-color: var(--accent-dim);
-            background: rgba(167, 139, 250, 0.05);
+            background: rgba(37, 99, 235, 0.05);
         }
 
         .links a svg {
@@ -198,7 +189,7 @@
 
         .project-badge {
             font-size: 0.7rem;
-            background: rgba(167, 139, 250, 0.12);
+            background: rgba(37, 99, 235, 0.08);
             color: var(--accent);
             padding: 3px 8px;
             border-radius: 4px;
@@ -248,7 +239,7 @@
 
         .tech-tag {
             font-size: 0.75rem;
-            background: rgba(99, 102, 241, 0.08);
+            background: var(--surface);
             color: var(--text-muted);
             padding: 4px 10px;
             border-radius: 6px;
@@ -273,6 +264,85 @@
         .project-link svg {
             width: 16px;
             height: 16px;
+        }
+
+        /* Project cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: 1fr;
+            gap: 16px;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--surface);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-card:hover {
+            border-color: #d1d5db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-info h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .project-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+            align-items: center;
+        }
+
+        .project-tag {
+            font-size: 0.7rem;
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--accent);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .project-arrow {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-left: auto;
+        }
+
+        .project-github {
+            color: var(--text-muted);
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+
+        .project-github:hover {
+            color: var(--text);
+        }
+
+        .project-github svg {
+            width: 18px;
+            height: 18px;
         }
 
         /* Skills */
@@ -325,6 +395,10 @@
                 align-items: flex-start;
             }
 
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
             .project-features {
                 grid-template-columns: 1fr;
             }
@@ -366,16 +440,17 @@
                 </div>
             </div>
             <p class="bio">
-                Senior Software Developer with 6+ years of experience specializing in 
-                high-availability <strong>Java/Spring Boot microservices</strong> on Cloud Foundry & AWS. 
-                I also build developer tools and browser extensions in my spare time.
+                I build backend systems that scale and stay up — <strong>Spring Boot</strong> microservices, 
+                <strong>Kafka</strong> pipelines, <strong>Redis</strong> locks, all running on <strong>AWS</strong>. 
+                I also craft clean, polished <strong>UIs</strong>. 
+                If it's distributed and needs to be reliable, I've probably shipped it.
             </p>
             <div class="links">
                 <a href="https://github.com/istaari" target="_blank" rel="noopener">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
                     GitHub
                 </a>
-                <a href="mailto:istaari@users.noreply.github.com">
+                <a href="mailto:devroshangupta@gmail.com">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                     Email
                 </a>
@@ -383,39 +458,57 @@
         </header>
 
         <section>
-            <p class="section-label">Featured Project</p>
-            <div class="project-card">
-                <div class="project-header">
-                    <span class="project-title">
-                        ✨ GitGlam
-                        <span class="project-badge">Chrome Extension</span>
-                    </span>
+            <p class="section-label">Projects</p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>✨ GitGlam</h3>
+                        <p>Chrome extension that transforms GitHub markdown into a beautiful reading experience with themes, focus mode, and more.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-tag">Chrome Extension</span>
+                        <a href="https://github.com/istaari/GitGlam" class="project-github" target="_blank" rel="noopener" title="View on GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                        </a>
+                    </div>
                 </div>
-                <p class="project-desc">
-                    Transforms GitHub's default markdown into a clean, distraction-free reading experience. 
-                    Beautiful themes, enhanced typography, syntax highlighting, focus mode, and more — 
-                    because reading documentation should feel as good as reading a well-designed blog.
-                </p>
-                <ul class="project-features">
-                    <li>4 Beautiful Themes</li>
-                    <li>Focus Mode</li>
-                    <li>Reading Mode</li>
-                    <li>Image Lightbox</li>
-                    <li>Code Block Enhancements</li>
-                    <li>Reading Progress Stats</li>
-                    <li>Scroll Animations</li>
-                    <li>Keyboard Shortcuts</li>
-                </ul>
-                <div class="project-tech">
-                    <span class="tech-tag">JavaScript</span>
-                    <span class="tech-tag">CSS</span>
-                    <span class="tech-tag">Chrome Extension (MV3)</span>
-                    <span class="tech-tag">Content Scripts</span>
+                <div class="project-card" style="opacity: 0.4;">
+                    <div class="project-info">
+                        <h3>Coming Soon</h3>
+                        <p>A new project is brewing. Stay tuned.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-tag">TBD</span>
+                        <a href="#" class="project-github" title="View on GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                        </a>
+                    </div>
                 </div>
-                <a href="https://github.com/istaari/GitGlam" class="project-link" target="_blank" rel="noopener">
-                    View on GitHub
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </a>
+                <div class="project-card" style="opacity: 0.4;">
+                    <div class="project-info">
+                        <h3>Coming Soon</h3>
+                        <p>A new project is brewing. Stay tuned.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-tag">TBD</span>
+                        <a href="#" class="project-github" title="View on GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card" style="opacity: 0.4;">
+                    <div class="project-info">
+                        <h3>Coming Soon</h3>
+                        <p>A new project is brewing. Stay tuned.</p>
+                    </div>
+                    <div class="project-meta">
+                        <span class="project-tag">TBD</span>
+                        <a href="#" class="project-github" title="View on GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                
             </div>
         </section>
 
@@ -448,7 +541,8 @@
                         <li>Distributed Systems</li>
                         <li>Event-Driven Architecture</li>
                         <li>Developer Tooling</li>
-                        <li>Generative AI</li>
+                        <li>LLMs & Generative AI</li>
+                        <li>Neural Networks</li>
                         <li>Open Source</li>
                     </ul>
                 </div>
